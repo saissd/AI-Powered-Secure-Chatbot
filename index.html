@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat with AI</title>
+</head>
+<body>
+    <h2>Chat with AI</h2>
+    <form id="chat-form">
+        <input type="text" id="user-message" placeholder="Enter your message">
+        <button type="submit">Send</button>
+    </form>
+    <p id="response"></p>
+
+    <script>
+        document.getElementById("chat-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let userMessage = document.getElementById("user-message").value;
+
+            fetch("https://silver-orbit-q7q64wwv5j9h6p-5000.app.github.dev/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ message: userMessage })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("response").innerText = "AI: " + data.response;
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    </script>
+</body>
+</html>
